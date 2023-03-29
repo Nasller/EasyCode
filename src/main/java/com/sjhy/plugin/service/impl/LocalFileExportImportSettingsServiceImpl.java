@@ -16,6 +16,7 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileWrapper;
 import com.intellij.util.ExceptionUtil;
+import com.sjhy.plugin.constants.StrState;
 import com.sjhy.plugin.dict.GlobalDict;
 import com.sjhy.plugin.dto.SettingsStorageDTO;
 import com.sjhy.plugin.service.ExportImportSettingsService;
@@ -62,7 +63,7 @@ public class LocalFileExportImportSettingsServiceImpl implements ExportImportSet
 
                 // 发起通知
                 Notification notification = new Notification(
-                        Notifications.SYSTEM_MESSAGES_GROUP_ID,
+                        StrState.Notification,
                         "Easy code notify",
                         "Easy code config file export to",
                         NotificationType.INFORMATION);

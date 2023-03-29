@@ -12,4 +12,6 @@ public class StrState {
      * 相对路径常量
      */
     public static final String RELATIVE_PATH = "./";
+
+    public static final String Notification = "EasyCode";
 }
