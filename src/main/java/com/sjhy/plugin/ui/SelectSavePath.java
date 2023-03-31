@@ -32,8 +32,10 @@ import java.awt.event.FocusEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.LinkedList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 选择保存路径
@@ -144,15 +146,9 @@ public class SelectSavePath extends DialogWrapper {
         this.tableInfoService = TableInfoSettingsService.getInstance();
         this.codeGenerateService = CodeGenerateService.getInstance(project);
         // 初始化module，存在资源路径的排前面
-        this.moduleList = new LinkedList<>();
-        for (Module module : ModuleManager.getInstance(project).getModules()) {
-            // 存在源代码文件夹放前面，否则放后面
-            if (ModuleUtils.existsSourcePath(module)) {
-                this.moduleList.add(0, module);
-            } else {
-                this.moduleList.add(module);
-            }
-        }
+        this.moduleList = Stream.of(ModuleManager.getInstance(project).getModules())
+                .sorted(Comparator.<Module,Boolean>comparing(o -> !ModuleUtils.existsSourcePath(o)).thenComparing(Module::getName))
+                .collect(Collectors.toList());
         this.initPanel();
         this.refreshData();
         this.initEvent();
